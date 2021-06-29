@@ -1,0 +1,13 @@
+<div class="{{ class }}">
+    <div class="header clearfix">
+        <a href="{% url 'index' %}" class="logo"></a>
+        <ul class="menu">
+            {% for item in links_menu %}
+            <li><a href="{% url item.href %}" class="{% if item.href == active %}
+                active
+            {% endif %}">{{ item.name }}</a></li>
+            {% endfor %}
+        </ul>
+        <a href="#" class="search"></a>
+        <a href="#" class="basket"></a>
+    </div>
