@@ -1,0 +1,74 @@
+[
+  {
+    "category": "дом",
+    "name": "синий стул",
+    "image": "product_images/product-2.jpg",
+    "short_desc": "очень синий",
+    "description": "самый синий стул",
+    "price": "10000.00",
+    "quantity": 45
+  },
+  {
+    "category": "дом",
+    "name": "красный стул",
+    "image": "product_images/product-4.jpg",
+    "short_desc": "очень красный",
+    "description": "самый красный стул",
+    "price": "12000.00",
+    "quantity": 23
+  },
+  {
+    "category": "офис",
+    "name": "диван офисный",
+    "image": "product_images/product-3-sm.jpg",
+    "short_desc": "стильный дизайн",
+    "description": "прекрасный выбор для любого офиса",
+    "price": "25000.00",
+    "quantity": 10
+  },
+  {
+    "category": "офис",
+    "name": "белый стул",
+    "image": "product_images/product-21.jpg",
+    "short_desc": "очень белый",
+    "description": "самый-самый белый",
+    "price": "15000.00",
+    "quantity": 23
+  },
+  {
+    "category": "модерн",
+    "name": "чайник",
+    "image": "product_images/product-3.jpg",
+    "short_desc": "изысканный дизайн",
+    "description": "необычная форма подчеркнет самобытность вашей кухни",
+    "price": "8000.00",
+    "quantity": 12
+  },
+  {
+    "category": "модерн",
+    "name": "ваза",
+    "image": "product_images/product-61.jpg",
+    "short_desc": "ручная работа",
+    "description": "кривая, как и все в вашем доме",
+    "price": "0.00",
+    "quantity": 0
+  },
+  {
+    "category": "классика",
+    "name": "часы настенные",
+    "image": "product_images/product-4-sm.jpg",
+    "short_desc": "показывают время",
+    "description": "не показывают отсутствие вкуса",
+    "price": "5000.00",
+    "quantity": 56
+  },
+  {
+    "category": "дом",
+    "name": "настольная лампа",
+    "image": "product_images/product-1.jpg",
+    "short_desc": "похожа на лампочку",
+    "description": "похожа на лампочку, но не лампочка. хотя лампочку придется купить. отдельно",
+    "price": "4000.00",
+    "quantity": 37
+  }
+]
