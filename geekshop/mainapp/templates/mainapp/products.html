@@ -10,31 +10,30 @@
 			<div class="links clearfix">
 				<ul class="links-menu">
 					<li><a href="#" class="active">все</a></li>
-					<li><a href="#">дом</a></li>
-					<li><a href="#">офис</a></li>
-					<li><a href="#">модерн</a></li>
-					<li><a href="#">классика</a></li>
+					{% for category in product_categories %}
+					<li><a href="#">{{ category.name }} </a></li>
+					{% endfor %}
 				</ul>
 			</div>
 
 			<div class="details-products">
 				<div class="details-slider">
 					<div class="slider-product">
-						<img src="/static/geekshop/img/slider1.jpg">
+						<img src="{% static 'geekshop/img/slider1.jpg' %}">
 					</div>
 					<div class="slider-control">
 						<div class="block">
-							<a href="#"><img src="/static/geekshop/img/controll.jpg" alt="">
+							<a href="#"><img src="{% static 'geekshop/img/controll.jpg' %}" alt="">
 								<div class="text"></div>
 							</a>
 						</div>
 						<div class="block">
-							<a href="#"><img src="/static/geekshop/img/controll1.jpg" alt="">
+							<a href="#"><img src="{% static 'geekshop/img/controll1.jpg' %}" alt="">
 								<div class="text"></div>
 							</a>
 						</div>
 						<div class="block">
-							<a href="#"><img src="/static/geekshop/img/controll2.jpg" alt="">
+							<a href="#"><img src="{% static 'geekshop/img/controll2.jpg' %}" alt="">
 								<div class="text"></div>
 							</a>
 						</div>
@@ -62,16 +61,16 @@
 			<div class="related">
 				<div class="title clearfix">
 					<h2>Похожие продукты</h2>
-					<a class="explore" href="#">показать все <img src="/static/geekshop/img/arrow.png" alt=""></a>
+					<a class="explore" href="#">показать все <img src="{% static 'geekshop/img/arrow.png' %}" alt=""></a>
 				</div>
 				<div class="related-products clearfix">
 					{% for item in product_items %}
 					<div class="block">
-						<a href="#"><img src="{{ item.img }}" alt="">
+						<a href="#"><img src="/media/{{item.image}}" alt="">
 							<div class="text">
-								<img src="/static/geekshop/img/icon-hover.png" alt="img">
-								<h4>{{ item.title }}</h4>
-								<p>{{ item.caption }}</p>
+								<img src="{% static 'geekshop/img/icon-hover.png' %}" alt="img">
+								<h4>{{ item.name }}</h4>
+								<p>{{ item.short_desc }}</p>
 							</div>
 						</a>
 					</div>
