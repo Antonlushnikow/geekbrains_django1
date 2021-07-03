@@ -1,0 +1,17 @@
+{% extends 'authapp/base.html' %}
+{% load static %}
+
+
+{% block content %}
+<div class="h2 text-center head">
+    Вход в систему
+</div>
+<form class="col col-md-4" action="{% url 'auth:login' %}" method="post">
+    {% csrf_token %}
+    {{ login_form.as_p }}
+    <br>
+    <button class="btn btn-primary" type="submit">войти</button>
+</form>
+
+
+{% endblock %}
