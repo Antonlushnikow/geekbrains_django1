@@ -1,0 +1,30 @@
+{% extends 'geekshop/base.html' %}
+{% load static %}
+
+{% block content %}
+{% include 'geekshop/includes/inc_main_menu.html' with active="products:index" class="hero-white" %}
+</div>
+{% if user.is_authenticated %}
+
+<div class="basket-items">
+    <table class="table">
+        <thead>
+        <tr>
+            <th class="">#</th>
+            <th class="">Продукт</th>
+            <th class="">Количество</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in basket %}
+        <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{ item.product }}</td>
+            <td>{{ item.quantity }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+{% endblock %}

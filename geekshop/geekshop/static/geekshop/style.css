@@ -20,6 +20,8 @@ html, body {
 	width: 1366px;
 	margin: 0 auto;
 	min-height: 100%;
+	display: flex;
+    flex-direction: column;
 }
 
 .slider {
@@ -544,11 +546,11 @@ html, body {
 .footer {
 	height: 384px;
 	width: 1169px;
-	background-color: #f7f7f7;
+	background-color: #f8f7f7;
 	padding-left: 99px;
 	padding-right: 98px;
-	margin: -384px auto 0;
 	clear: both;
+	flex: 0 0 auto;
 }
 .footer form {
 	position: relative;
@@ -700,6 +702,7 @@ td:first-child {
 	padding-left: 98px;
 	padding-right: 211px;
 	position: relative;
+
 }
 .hero h1 {
 	color:  #212121;
@@ -849,6 +852,7 @@ td:first-child {
 	padding-left: 98px;
 	padding-right: 211px;
 	position: relative;
+	flex: 0 0 auto;
 }
 
 .links {
@@ -1069,4 +1073,19 @@ td:first-child {
 }
 .related-products a:hover .text{
 	display: block;
+}
+
+.basket-items {
+    margin-top: 100px;
+    margin-bottom: 100px;
+    width: 1169px;
+    background-color: #fff;
+    padding-left: 99px;
+    padding-right: 98px;
+    clear: both;
+    flex: 1 0 auto;
+}
+
+.basket-items th {
+    text-align: left;
 }
