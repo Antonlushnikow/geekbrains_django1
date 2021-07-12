@@ -17,7 +17,7 @@
             {% endif %}
         </ul>
         <a href="#" class="search"></a>
-        <a href="{% url 'basket:view' %}" class="basket">
-        {% if basket %} {{ basket|length }} {% endif %}
-        </a>
+        <div class="basket-summary">
+        {% include 'basketapp/includes/inc_basket_summary.html' %}
+        </div>
     </div>
