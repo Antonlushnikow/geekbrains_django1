@@ -19,6 +19,10 @@ class ProductCategory(models.Model):
         auto_now=True,
     )
 
+    is_deleted = models.BooleanField(
+        default=False,
+    )
+
     def __str__(self):
         return self.name or f'Product Category #{self.pk}'
 
@@ -62,12 +66,15 @@ class Product(models.Model):
         default=0,
     )
 
-
     сreated = models.DateTimeField(
         auto_now_add=True
     )
     updated = models.DateTimeField(
         auto_now=True
+    )
+
+    is_deleted = models.BooleanField(
+        default=False,
     )
 
     def __str__(self):
