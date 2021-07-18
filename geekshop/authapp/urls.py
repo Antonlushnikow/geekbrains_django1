@@ -15,13 +15,17 @@ Including another URLconf
 """
 
 from django.urls import path
-from .views import login, logout, edit, register
+from .views import ShopUserLoginView, ShopUserEditView, ShopUserLogoutView, ShopUserRegisterView
 
 app_name = 'authapp'
 
 urlpatterns = [
-    path('login/', login, name='login'),
-    path('logout/', logout, name='logout'),
-    path('edit/', edit, name='edit'),
-    path('register/', register, name='register'),
+    # path('login/', login, name='login'),
+    path('login/', ShopUserLoginView.as_view(), name='login'),
+    path('logout/', ShopUserLogoutView.as_view(), name='logout'),
+    # path('logout/', logout, name='logout'),
+    # path('edit/', edit, name='edit'),
+    path('edit/', ShopUserEditView.as_view(), name='edit'),
+    path('register/', ShopUserRegisterView.as_view(), name='register'),
+    # path('register/', register, name='register'),
 ]

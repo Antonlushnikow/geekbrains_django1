@@ -2,9 +2,11 @@ import json
 import random
 
 from django.shortcuts import render, get_object_or_404
+from django.views.generic import ListView, DetailView
 from mainapp.models import ProductCategory, Product
 
 from basketapp.models import Basket
+
 
 with open('geekshop/templates/geekshop/links_menu.json', 'r', encoding="utf-8") as content:
     links_menu = json.load(content)
@@ -28,54 +30,44 @@ def get_same_products(hot_product):
     return same_product
 
 
-def products(request, pk=None):
-    title = 'продукты'
-    basket = get_basket(request.user)
-    product_categories = ProductCategory.objects.all()
-    product_items = Product.objects.all()
-    hot_product = get_hot_product()
-    same_products = get_same_products(hot_product)
+class ProductsListView(ListView):
+    Model = Product
+    template_name = 'mainapp/products.html'
+    context_object_name = 'objects'
+    paginate_by = 3
 
-    if pk is not None:
-        if pk == 0:
-            product_items = Product.objects.all().order_by('price')
-            category = {'name': 'все'}
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(ProductsListView, self).get_context_data()
+        context['title'] = 'продукты'
+        context['links_menu'] = links_menu
+        context['basket'] = get_basket(self.request.user)
+        context['hot_product'] = get_hot_product()
+        context['same_products'] = get_same_products(context['hot_product'])
+        context['product_categories'] = ProductCategory.objects.all()
+        if 'pk' in self.kwargs and self.kwargs['pk']:
+            context['category'] = get_object_or_404(ProductCategory, pk=self.kwargs['pk'])
+        return context
+
+    def get_queryset(self):
+        if 'pk' in self.kwargs:
+            if self.kwargs['pk']:
+                return Product.objects.filter(category__pk=self.kwargs['pk'])
+            else:
+                return Product.objects.all()
         else:
-            category = get_object_or_404(ProductCategory, pk=pk)
-            product_items = Product.objects.filter(category__pk=pk).order_by('price')
-
-        context = {
-            'title': title,
-            'product_items': product_items,
-            'category': category,
-            'product_categories': product_categories,
-            'links_menu': links_menu,
-            'same_products': same_products,
-            'hot_product': hot_product,
-            'basket': basket,
-        }
-        return render(request, 'mainapp/products.html', context=context)
-
-    context = {
-        'title': title,
-        'links_menu': links_menu,
-        'same_products': same_products,
-        'hot_product': hot_product,
-        'product_categories': product_categories,
-        'product_items': product_items,
-        'basket': basket,
-    }
-    return render(request, 'mainapp/products.html', context=context)
+            return Product.objects.all()
 
 
-def product(request, pk):
-    title = 'продукты'
+class ProductReadView(DetailView):
+    Model = Product
+    template_name = 'mainapp/product.html'
 
-    context = {
-        'title': title,
-        'links_menu': links_menu,
-        'product': get_object_or_404(Product, pk=pk),
-        'basket': get_basket(request.user),
-    }
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(ProductReadView, self).get_context_data()
+        context['title'] = 'продукты'
+        context['links_menu'] = links_menu
+        context['basket'] = get_basket(self.request.user)
+        return context
 
-    return render(request, 'mainapp/product.html', context)
+    def get_queryset(self):
+        return Product.objects.filter(pk=self.kwargs['pk'])

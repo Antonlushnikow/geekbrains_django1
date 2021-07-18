@@ -1,5 +1,6 @@
 {% extends 'geekshop/base.html' %}
 {% load static %}
+{% load my_tags %}
 
 
 {% block content %}
@@ -10,8 +11,9 @@
         <ul class="links-menu">
             <li><a href="{% url 'products:category' 0 %}"
                    {% if request.resolver_match.kwargs.pk == 0 %}
-                    class="active"
-                  {% endif %}>все</a></li>
+                   class="active"
+                   {% endif %}
+            >все</a></li>
             {% for category in product_categories %}
             <li><a href="{% url 'products:category' category.pk %}"
                    class="{% if request.resolver_match.kwargs.pk == category.pk %}
@@ -25,21 +27,24 @@
     <div class="details-products">
         <div class="details-slider">
             <div class="slider-product">
-                <img src="/media/{{ hot_product.image }}">
+                <img src="/media/{{ hot_product.image|media_folder_products }}">
             </div>
             <div class="slider-control">
                 <div class="block">
-                    <a href="#"><img src="/media/{{ hot_product.image }}" alt="" style="width:50px;">
+                    <a href="#"><img src="/media/{{ hot_product.image|media_folder_products }}" alt=""
+                                     style="width:50px;">
                         <div class="text"></div>
                     </a>
                 </div>
                 <div class="block">
-                    <a href="#"><img src="/media/{{ hot_product.image }}" alt="" style="width:50px;">
+                    <a href="#"><img src="/media/{{ hot_product.image|media_folder_products }}" alt=""
+                                     style="width:50px;">
                         <div class="text"></div>
                     </a>
                 </div>
                 <div class="block">
-                    <a href="#"><img src="/media/{{ hot_product.image }}" alt="" style="width:50px;">
+                    <a href="#"><img src="/media/{{ hot_product.image|media_folder_products }}" alt=""
+                                     style="width:50px;">
                         <div class="text"></div>
                     </a>
                 </div>
@@ -61,24 +66,62 @@
     <div class="products_list">
         <div class="title clearfix">
             <h2>
-                Категория: "{{ category.name|title }}"
+                Категория: "{% if category.name %}{{ category.name|title }}{% else %}Все{% endif %}"
             </h2>
         </div>
+        {% if is_paginated %}
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1">&laquo;</a>
+                    <a href="?page={{ page_obj.previous_page_number }}"><</a>
+                {% endif %}
+
+                <span class="current">
+                    Стр. {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}"> > </a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}">&raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+        <!--        <div class="title pagination">-->
+        <!--            {% if page_obj.has_previous %}-->
+        <!--            <a href="{{page_obj.previous_page_number}}">-->
+        <!--                <-->
+        <!--            </a>-->
+        <!--            {% endif %}-->
+        <!--            <span class="current">-->
+        <!--                страница {{ product_items.number }} из {{ product_items.paginator.num_pages }}-->
+        <!--            </span>-->
+        <!--            {% if product_items.has_next %}-->
+        <!--            <a href="{% url 'products:page' category.pk product_items.next_page_number %}">-->
+        <!--                >-->
+        <!--            </a>-->
+        <!--            {% endif %}-->
+        <!--        </div>-->
+        {% endif %}
+
     </div>
 
 
     <div class="featured">
-        <div class="featured-menu">
+
+
+        <!-- class="featured-menu">
             <a class="active" href="#">Популярные</a><a href="#">Новинки</a>
         </div>
         <a class="explore" href="#">показать все <img src="{% static 'geekshop/img/arrow.png' %}" alt=""></a>
-        <div class="clearfix">
-        </div>
+        <div-- class="clearfix">
+        </div-->
         <div class="tab-content">
             <div class="related-products clearfix">
-                {% for item in product_items %}
+                {% for item in objects %}
                 <div class="block">
-                    <a href="{% url 'products:product' item.pk %}"><img src="/media/{{item.image}}" alt="">
+                    <a href="{% url 'products:product' item.pk %}"><img
+                            src="/media/{{item.image|media_folder_products}}" alt="">
                         <div class="text">
                             <img src="{% static 'geekshop/img/icon-hover.png' %}" alt="img">
                             <h4>{{ item.name }}</h4>
@@ -94,7 +137,7 @@
         <div class="related">
             <div class="title clearfix">
                 <h2>Похожие продукты</h2>
-                <a class="explore" href="#">показать все <img src="{% static 'geekshop/img/arrow.png' %}" alt=""></a>
+                <!--a class="explore" href="#">показать все <img src="{% static 'geekshop/img/arrow.png' %}" alt=""></a-->
             </div>
             <div class="related-products clearfix">
                 {% for item in same_products %}

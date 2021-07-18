@@ -1,5 +1,6 @@
 {% extends 'geekshop/base.html' %}
 {% load static %}
+{% load my_tags %}
 
 
 {% block content %}
@@ -11,22 +12,22 @@
     <div class="details-products">
         <div class="details-slider">
             <div class="slider-product">
-                <img src="/media/{{ product.image }}">
+                <img src="/media/{{ product.image|media_folder_products }}">
             </div>
             <div class="slider-control">
                 <div class="block">
-                    <a href="#"><img src="/media/{{ product.image }}" alt="" style="width:50px;">
+                    <a href="#"><img src="/media/{{ product.image|media_folder_products }}" alt="" style="width:50px;">
                         <div class="text"></div>
                     </a>
                 </div>
                 <div class="block">
-                    <a href="#"><img src="/media/{{ product.image }}" alt="" style="width:50px;">
+                    <a href="#"><img src="/media/{{ product.image|media_folder_products }}" alt="" style="width:50px;">
                         <div class="text"></div>
                     </a>
                 </div>
                 <div class="block">
-                    <a href="#"><img src="/media/{{ product.image }}" alt="" style="width:50px;">
-                        <div class="text"></div>
+                    <a href="#"><img src="/media/{{ product.image|media_folder_products }}" alt="" style="width:50px;">
+                        <div class="text">{{basket}}</div>
                     </a>
                 </div>
             </div>
