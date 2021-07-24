@@ -66,7 +66,6 @@ class ProductReadView(DetailView):
         context = super(ProductReadView, self).get_context_data()
         context['title'] = 'продукты'
         context['links_menu'] = links_menu
-        context['basket'] = get_basket(self.request.user)
         return context
 
     def get_queryset(self):
