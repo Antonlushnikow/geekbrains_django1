@@ -1,13 +1,14 @@
 from django.contrib.auth.views import LoginView, LogoutView
 from django.core.mail import send_mail
+from django.db import transaction
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib import auth
 from django.urls import reverse
 
-from authapp.forms import ShopUserLoginForm, ShopUserEditForm, ShopUserRegisterForm
+from authapp.forms import ShopUserLoginForm, ShopUserEditForm, ShopUserRegisterForm, ShopUserProfileEditForm
 
-from authapp.models import ShopUser
+from authapp.models import ShopUser, ShopUserProfile
 from django.views.generic import UpdateView, CreateView
 
 from geekshop import settings
@@ -24,7 +25,6 @@ def send_verify_email(user):
 
 
 def verify(request, email, activation_key):
-    print('sdfsd')
     try:
         user = ShopUser.objects.get(email=email)
         if user.activation_key == activation_key and not user.is_activation_key_expired():
@@ -61,24 +61,50 @@ class ShopUserLogoutView(LogoutView):
         return reverse('index')
 
 
-class ShopUserEditView(UpdateView):
-    Model = ShopUser
-    form_class = ShopUserEditForm
-    template_name = 'authapp/edit.html'
+# class ShopUserEditView(UpdateView):
+#     Model = ShopUser
+#     form_class = ShopUserEditForm
+#     form_class2 = ShopUserProfileEditForm
+#     template_name = 'authapp/edit.html'
+#
+#     def get_context_data(self, *, object_list=None, **kwargs):
+#         context = super(ShopUserEditView, self).get_context_data()
+#         context['title'] = 'изменить профиль'
+#         context['form'] = self.form_class(instance=self.request.user)
+#         context['form2'] = self.form_class2(instance=self.request.user.shopuserprofile)
+#         return context
+#
+#     def get_success_url(self):
+#         return reverse('index')
+#
+#     def get_object(self):
+#         return ShopUser.objects.filter(pk=self.request.user.pk).get()
+#
+#     def get_queryset(self):
+#         return ShopUser.objects.filter(pk=self.request.user.pk)
 
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super(ShopUserEditView, self).get_context_data()
-        context['title'] = 'изменить профиль'
-        return context
 
-    def get_success_url(self):
-        return reverse('index')
+@transaction.atomic
+def edit(request):
+    title = 'редактирование'
 
-    def get_object(self):
-        return ShopUser.objects.filter(pk=self.request.user.pk).get()
+    if request.method == 'POST':
+        edit_form = ShopUserEditForm(request.POST, request.FILES, instance=request.user)
+        profile_form = ShopUserProfileEditForm(request.POST, instance=request.user.shopuserprofile)
+        if edit_form.is_valid() and profile_form.is_valid():
+            edit_form.save()
+            return HttpResponseRedirect(reverse('auth:edit'))
+    else:
+        edit_form = ShopUserEditForm(instance=request.user)
+        profile_form = ShopUserProfileEditForm(instance=request.user.shopuserprofile)
 
-    def get_queryset(self):
-        return ShopUser.objects.filter(pk=self.request.user.pk)
+    context = {
+        'title': title,
+        'edit_form': edit_form,
+        'profile_form': profile_form,
+    }
+
+    return render(request, 'authapp/edit.html', context)
 
 
 class ShopUserRegisterView(CreateView):

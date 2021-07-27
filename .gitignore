@@ -129,4 +129,5 @@ dmypy.json
 .pyre/
 /geekshop/media/
 /geekshop/tmp/
-
+/geekshop/vk.json
+/geekshop/.env

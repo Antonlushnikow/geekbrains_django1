@@ -15,7 +15,8 @@ Including another URLconf
 """
 
 from django.urls import path
-from .views import ShopUserLoginView, ShopUserEditView, ShopUserLogoutView, ShopUserRegisterView, verify
+from .views import ShopUserLoginView, ShopUserLogoutView, ShopUserRegisterView, verify, edit
+# ShopUserEditView,
 
 app_name = 'authapp'
 
@@ -24,8 +25,8 @@ urlpatterns = [
     path('login/', ShopUserLoginView.as_view(), name='login'),
     path('logout/', ShopUserLogoutView.as_view(), name='logout'),
     # path('logout/', logout, name='logout'),
-    # path('edit/', edit, name='edit'),
-    path('edit/', ShopUserEditView.as_view(), name='edit'),
+    path('edit/', edit, name='edit'),
+    # path('edit/', ShopUserEditView.as_view(), name='edit'),
     path('register/', ShopUserRegisterView.as_view(), name='register'),
     # path('register/', register, name='register'),
     path('verify/<str:email>/<str:activation_key>/', verify, name='verify'),
