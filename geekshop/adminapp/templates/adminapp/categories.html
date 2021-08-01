@@ -5,6 +5,25 @@
 <main>
     <div class="container-fluid">
         <h1 class="mt-4">Категории</h1>
+
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1">&laquo;</a>
+                    <a href="?page={{ page_obj.previous_page_number }}"><</a>
+                {% endif %}
+
+                <span class="current">
+                    Стр. {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">></a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}"> &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+
         <div class="card mb-4">
             <div class="card-header">
                 <i class="fas fa-table mr-1"></i>
