@@ -1,0 +1,14 @@
+{% extends 'authapp/base.html' %}
+{% load static %}
+
+
+{% block content %}
+    {% if user %}
+        <h1>Поздравляем, вы прошли регистрацию!</h1>
+        <button class="btn btn-round">
+            <a href="{% url 'index' %}">
+                на главную
+            </a>
+        </button>
+    {% endif %}
+{% endblock %}

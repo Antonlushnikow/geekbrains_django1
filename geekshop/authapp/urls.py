@@ -15,7 +15,7 @@ Including another URLconf
 """
 
 from django.urls import path
-from .views import ShopUserLoginView, ShopUserEditView, ShopUserLogoutView, ShopUserRegisterView
+from .views import ShopUserLoginView, ShopUserEditView, ShopUserLogoutView, ShopUserRegisterView, verify
 
 app_name = 'authapp'
 
@@ -28,4 +28,5 @@ urlpatterns = [
     path('edit/', ShopUserEditView.as_view(), name='edit'),
     path('register/', ShopUserRegisterView.as_view(), name='register'),
     # path('register/', register, name='register'),
+    path('verify/<str:email>/<str:activation_key>/', verify, name='verify'),
 ]

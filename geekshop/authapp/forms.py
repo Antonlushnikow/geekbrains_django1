@@ -3,6 +3,7 @@ from django.contrib.auth.forms import AuthenticationForm, UserChangeForm, UserCr
 
 
 from .models import ShopUser
+import random, hashlib
 
 
 class ShopUserLoginForm(AuthenticationForm):
@@ -56,3 +57,13 @@ class ShopUserRegisterForm(UserCreationForm):
             raise forms.ValidationError("Вы слишком молоды для наших стульев")
 
         return data
+
+    def save(self):
+        user = super(ShopUserRegisterForm, self).save()
+
+        user.is_active = False
+        salt = hashlib.sha1(str(random.random()).encode('utf-8')).hexdigest()[:6]
+        user.activation_key = hashlib.sha1((user.email + salt).encode('utf-8')).hexdigest()
+        user.save()
+        return user
+
