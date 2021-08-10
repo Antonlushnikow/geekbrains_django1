@@ -17,7 +17,7 @@ html, body {
 }
 
 .container {
-	width: 1366px;
+	width: 1400px;
 	margin: 0 auto;
 	min-height: 100%;
 	display: flex;
@@ -550,12 +550,16 @@ html, body {
 
 .footer {
 	height: 384px;
-	width: 1169px;
+	width: 100%;
 	background-color: #f8f7f7;
 	padding-left: 99px;
 	padding-right: 98px;
 	clear: both;
 	flex: 0 0 auto;
+}
+
+* ::after, ::before {
+    box-sizing:content-box;
 }
 .footer form {
 	position: relative;
@@ -572,7 +576,7 @@ html, body {
 }
 .text-footer {
 	margin-top: 120px;
-	width: 221px;
+/*	width: 221px; */
 	float: left;
 	margin-right: 68px;
 }
@@ -1050,10 +1054,10 @@ td:first-child {
 }
 .related-products .block {
 	float: left;
-	margin-right: 30px;
+	margin-right: 10px;
 	display: block;
 	height: 370px;
-	width: 370px;
+	width: 360px;
 	position: relative;
 }
 .related-products .block:nth-child(3n) {

@@ -4,6 +4,15 @@ from authapp.models import ShopUser, ShopUserProfile
 
 
 admin.site.register(ProductCategory)
-admin.site.register(Product)
 admin.site.register(ShopUser)
 admin.site.register(ShopUserProfile)
+
+
+@admin.register(Product)
+class ProductAdmin(admin.ModelAdmin):
+    list_display = [
+        'name',
+        'price',
+        'quantity',
+        'created',
+    ]
