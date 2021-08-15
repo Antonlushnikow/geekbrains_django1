@@ -7,9 +7,91 @@ from mainapp.models import ProductCategory, Product
 
 from basketapp.models import Basket
 
+from django.conf import settings
+from django.core.cache import cache
 
 with open('geekshop/templates/geekshop/links_menu.json', 'r', encoding="utf-8") as content:
-    links_menu = json.load(content)
+   links_menu = json.load(content)
+
+
+def get_links_menu():
+   if settings.LOW_CACHE:
+       key = 'links_menu'
+       links_menu = cache.get(key)
+       if links_menu is None:
+           links_menu = ProductCategory.objects.filter(is_deleted=False)
+           cache.set(key, links_menu)
+       return links_menu
+   else:
+       return ProductCategory.objects.filter(is_deleted=False)
+
+
+def get_category(pk):
+   if settings.LOW_CACHE:
+       key = f'category_{pk}'
+       category = cache.get(key)
+       if category is None:
+           category = get_object_or_404(ProductCategory, pk=pk)
+           cache.set(key, category)
+       return category
+   else:
+       return get_object_or_404(ProductCategory, pk=pk)
+
+
+def get_products():
+   if settings.LOW_CACHE:
+       key = 'products'
+       products = cache.get(key)
+       if products is None:
+           products = Product.objects.filter(is_deleted=False, \
+                         category__is_deleted=False).select_related('category')
+           cache.set(key, products)
+       return products
+   else:
+       return Product.objects.filter(is_deleted=False, \
+                         category__is_deleted=False).select_related('category')
+
+
+def get_product(pk):
+   if settings.LOW_CACHE:
+       key = f'product_{pk}'
+       product = cache.get(key)
+       if product is None:
+           product = get_object_or_404(Product, pk=pk)
+           cache.set(key, product)
+       return product
+   else:
+       return get_object_or_404(Product, pk=pk)
+
+
+def get_products_ordered_by_price():
+   if settings.LOW_CACHE:
+       key = 'products_orederd_by_price'
+       products = cache.get(key)
+       if products is None:
+           products = Product.objects.filter(is_deleted=False, \
+                                  category__is_deleted=False).order_by('price')
+           cache.set(key, products)
+       return products
+   else:
+       return Product.objects.filter(is_deleted=False,\
+                                 category__is_deleted=False).order_by('price')
+
+
+def get_products_in_category_ordered_by_price(pk):
+   if settings.LOW_CACHE:
+       key = f'products_in_category_orederd_by_price_{pk}'
+       products = cache.get(key)
+       if products is None:
+           products = Product.objects.filter(category__pk=pk, is_deleted=False,\
+                              category__is_deleted=False).order_by('price')
+           cache.set(key, products)
+       return products
+   else:
+       return Product.objects.filter(category__pk=pk, is_deleted=False, \
+                              category__is_deleted=False).order_by('price')
+
+
 
 
 def get_basket(user):
@@ -21,7 +103,7 @@ def get_basket(user):
 
 
 def get_hot_product():
-    products = Product.objects.all()
+    products = get_products()
     return random.sample(list(products), 1)[0]
 
 
@@ -45,17 +127,19 @@ class ProductsListView(ListView):
         context['same_products'] = get_same_products(context['hot_product'])
         context['product_categories'] = ProductCategory.objects.all()
         if 'pk' in self.kwargs and self.kwargs['pk']:
-            context['category'] = get_object_or_404(ProductCategory, pk=self.kwargs['pk'])
+            context['category'] = get_category(self.kwargs['pk'])
         return context
 
     def get_queryset(self):
         if 'pk' in self.kwargs:
             if self.kwargs['pk']:
-                return Product.objects.filter(category__pk=self.kwargs['pk'])
+                return get_products_in_category_ordered_by_price(self.kwargs['pk'])
+# Product.objects.filter(category__pk=self.kwargs['pk'])
             else:
-                return Product.objects.all()
+                return get_products_ordered_by_price()
         else:
-            return Product.objects.all()
+            return get_products_ordered_by_price()
+# Product.objects.all()
 
 
 class ProductReadView(DetailView):
@@ -68,5 +152,6 @@ class ProductReadView(DetailView):
         context['links_menu'] = links_menu
         return context
 
-    def get_queryset(self):
-        return Product.objects.filter(pk=self.kwargs['pk'])
+    def get_object(self):
+        return get_product(pk=self.kwargs['pk'])
+  
