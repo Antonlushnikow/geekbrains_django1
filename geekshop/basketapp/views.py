@@ -11,6 +11,8 @@ from basketapp.models import Basket
 
 from django.contrib.auth.decorators import login_required
 
+
+
 with open('geekshop/templates/geekshop/links_menu.json', 'r', encoding="utf-8") as content:
     links_menu = json.load(content)
 
