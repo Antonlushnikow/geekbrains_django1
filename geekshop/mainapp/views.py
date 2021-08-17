@@ -237,7 +237,7 @@ class ProductReadView(DetailView):
 
 
 def products_ajax(request, pk=None, page=1):
-    if True:
+    if request.is_ajax():
         if pk is not None:
             if pk == 0:
                 category = {
