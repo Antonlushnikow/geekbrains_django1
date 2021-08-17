@@ -1,0 +1,56 @@
+{% load static %}
+{% load my_tags %}
+
+    <div class="products_list">
+        <div class="title clearfix">
+            <h2>
+                Категория: "{% if category.name %}{{ category.name|title }}{% else %}Все{% endif %}"
+            </h2>
+        </div>
+        {% if is_paginated %}
+
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1">&laquo;</a>
+                    <a href="?page={{ page_obj.previous_page_number }}"><</a>
+                {% endif %}
+
+                <span class="current">
+                    Стр. {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}"> > </a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}">&raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+        {% endif %}
+    </div>
+
+        <div class="featured">
+
+
+        <!-- class="featured-menu">
+            <a class="active" href="#">Популярные</a><a href="#">Новинки</a>
+        </div>
+        <a class="explore" href="#">показать все <img src="{% static 'geekshop/img/arrow.png' %}" alt=""></a>
+        <div-- class="clearfix">
+        </div-->
+        <div class="tab-content">
+            <div class="related-products clearfix">
+                {% for item in products %}
+                <div class="block">
+                    <a href="{% url 'products:product' item.pk %}"><img
+                            src="/media/{{item.image|media_folder_products}}" alt="">
+                        <div class="text">
+                            <img src="{% static 'geekshop/img/icon-hover.png' %}" alt="img">
+                            <h4>{{ item.name }}</h4>
+                            <p>{{ item.short_desc }}</p>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>

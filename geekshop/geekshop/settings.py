@@ -232,7 +232,6 @@ if DEBUG:
    ]
 
 
-
 if os.name == 'posix':
    CACHE_MIDDLEWARE_ALIAS = 'default'
    CACHE_MIDDLEWARE_SECONDS = 120
@@ -245,4 +244,6 @@ if os.name == 'posix':
        }
    }
 
+
 LOW_CACHE = True
+
