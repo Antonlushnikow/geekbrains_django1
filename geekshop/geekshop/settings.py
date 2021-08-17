@@ -30,7 +30,7 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -49,7 +49,6 @@ INSTALLED_APPS = [
     'ordersapp',
 
     'social_django',
-
     'debug_toolbar',
     'template_profiler_panel',
     'django_extensions',
@@ -114,8 +113,9 @@ SOCIAL_AUTH_PIPELINE = (
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'geekshop',
+	'USER': 'postgres',
     }
 }
 
@@ -157,6 +157,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "geekshop", "static"),
@@ -230,6 +231,7 @@ if DEBUG:
        'template_profiler_panel.panels.template.TemplateProfilerPanel',
    ]
 
+
 if os.name == 'posix':
    CACHE_MIDDLEWARE_ALIAS = 'default'
    CACHE_MIDDLEWARE_SECONDS = 120
@@ -242,4 +244,6 @@ if os.name == 'posix':
        }
    }
 
+
 LOW_CACHE = True
+
