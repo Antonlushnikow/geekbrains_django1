@@ -78,7 +78,7 @@ class OrderUpdate(LoginRequiredMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         data = super(OrderUpdate, self).get_context_data(**kwargs)
-        OrderFormSet = inlineformset_factory(Order, OrderItem, form=OrderItemForm, extra=1)
+        OrderFormSet = inlineformset_factory(Order, OrderItem, form=OrderItemForm, extra=0)
 
         if self.request.POST:
             data['orderitems'] = OrderFormSet(self.request.POST, instance=self.object)
@@ -99,7 +99,9 @@ class OrderUpdate(LoginRequiredMixin, UpdateView):
         with transaction.atomic():
             form.instance.user = self.request.user
             self.object = form.save()
+            print(orderitems.errors)
             if orderitems.is_valid():
+                print('valid')
                 orderitems.instance = self.object
                 orderitems.save()
 

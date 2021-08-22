@@ -4,7 +4,8 @@ window.onload = function () {
     var price_arr = [];
 
     var total_forms = parseInt($('input[name=orderitems-TOTAL_FORMS]').val());
-//    console.log(total_forms);
+    console.log(total_forms);
+    console.log('Привет');
 
     var order_total_quantity = parseInt($('.order_total_quantity').text()) || 0;
     var order_total_price = parseFloat($('.order_total_cost').text().replace(',', '.')) || 0;
@@ -19,13 +20,16 @@ window.onload = function () {
         } else {
             price_arr[i] = 0;
         }
-//        console.log(quantity_arr);
-//        console.info('QUANTITY_ARR: ', quantity_arr);
-//        console.log(price_arr);
+        console.log(quantity_arr);
+        console.info('QUANTITY_ARR: ', quantity_arr);
+        console.log(price_arr);
 
         $('.order_form').on('click', 'input[type=number]', function(){
+            console.log('click input')
             var target = event.target;
             orderitem_num = parseInt(target.name.replace('orderitems-', '').replace('-quantity', ''));
+            console.log('orderitemnum'+orderitem_num)
+            console.log('price_arr'+price_arr)
             if(price_arr[orderitem_num]){
                 orderitem_quantity = parseInt(target.value);
                 delta_quantity = orderitem_quantity - quantity_arr[orderitem_num];

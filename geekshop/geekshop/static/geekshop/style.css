@@ -724,13 +724,13 @@ td:first-child {
 }
 
 .location {
-	padding: 0px 97px;
+	padding: 0px 75px;
 }
 .location-1 {
 	height: 368px;
 	width: 368px;
 	border: 1px solid #9c9c9c;
-	margin: 71px 28px 122px 0px;
+	margin: 71px 18px 122px 0px;
 	float: left;
 }
 .location-1:last-child {
@@ -1050,12 +1050,14 @@ td:first-child {
 	margin-bottom: 20px;
 }
 .related-products .block a img {
-	float: left;
+display:block;
+	margin: auto;
 }
 .related-products .block {
 	float: left;
 	margin-right: 10px;
 	display: block;
+
 	height: 370px;
 	width: 360px;
 	position: relative;

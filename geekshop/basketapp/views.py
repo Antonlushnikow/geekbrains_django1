@@ -1,5 +1,6 @@
 import json
 
+from django.db.models import F, Q
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
@@ -57,10 +58,12 @@ class BasketListView(ListView):
         product = get_object_or_404(Product, pk=pk)
 
         _basket = Basket.objects.filter(user=self.user, product=product).first()
+        # _basket = Basket.get_item(user=self.user, product=product).first()
         if not _basket:
             _basket = Basket(user=self.user, product=product)
 
         _basket.quantity += 1
+        # _basket.quantity = F('quantity') + 1
         _basket.save()
         return HttpResponseRedirect(self.META.get('HTTP_REFERER'))
 
